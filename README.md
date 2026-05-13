@@ -1,2 +1,2 @@
 # DungeonsAndDragons_RPG
-text
+Proiect pentru laboratorul de Programare Orientata pe Obiecte, Anul 1, Semestrul 2, FMI
