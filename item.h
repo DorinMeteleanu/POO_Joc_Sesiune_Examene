@@ -13,6 +13,15 @@ public:
     }
 };
 
+class SticlaApa : public Item {
+public:
+    SticlaApa() : Item("Sticla de Apa") {}
+    void foloseste(Student* s, int& dificultate_examen) override {
+        std::cout << "Ai baut o sticla de apa! Energia ta a crescut cu 5!\n";
+        s->modificaEnergie(5);
+    }
+};
+
 class Cafea : public Item {
 public:
     Cafea() : Item("Cafea") {}

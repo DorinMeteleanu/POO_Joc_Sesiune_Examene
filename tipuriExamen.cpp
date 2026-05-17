@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 //EXAMEN SCRIS
-ExamenScris::ExamenScris(std::string materie) : Examen(materie, 60, 15, 5) {}
+ExamenScris::ExamenScris(std::string materie) : Examen(materie, 60, 30, 5) {}
 void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     int dificultate = getDificultate();
     std::cout << "==================================\n";
@@ -54,7 +54,13 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             std::cout << "Alegerea ta: ";
             int index_item;
             std::cin >> index_item;
-            // cautare obiect, adaug mai tarziu logica
+            try {
+                Item* it = ghiozdan->getElement(index_item);
+                it->foloseste(student, dificultate);
+                delete it;
+            } catch (const std::out_of_range& e) {
+                    std::cout << "Index invalid! Pierzi timpul!\n";
+            }
             
         }
         else {
@@ -70,6 +76,81 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     }
 };
 
-//EXAMEN ORAL
+ExamenOral::ExamenOral(std::string materie) : Examen(materie, 30, 10, 2) {}
+void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
+    std::cout << "==================================\n";
+    std::cout << "INCEPE EXAMENUL ORAL LA " << getNume() << "!\n";
+    std::cout << "Dificultate: " << getDificultate() << "\n";
+    std::cout << "Tocmai ai intrat in sala de examen! Profesorul incepe sa iti adreseze intrebari...\n";
+    int dificultate = getDificultate();
+    while (dificultate > 0 && student->getEnergie() > 0) {
+        std::cout << "-> Dificultate ramasa: " << dificultate << "\n";
+        std::cout << "-> Energia ramasa: " << student->getEnergie() << "\n";
+        std::cout << "Alege o actiune: \n";
+        std::cout << "1. Raspunzi direct la o intrebare (-10 dificultate, -15 energie) \n";
+        std::cout << "2. Zambesti carismatic sperand sa te ajute (-5 energie, -10 dificultate (dar cu 50 la suta sanse)) \n";
+        std::cout << "3. Ceri voie la un item de ajutor? (50 la suta sanse sa te lase) \n";
+        int alegere;
+        std::cin >> alegere;
 
-//EXAMEN GRILA
+        if(alegere == 1) {
+            std::cout << "\n[!] Profesorul pare impresionat. Tine-o tot asa daca poti!\n";
+            dificultate -= 10;
+            student->modificaEnergie(-15);
+        }
+        else if(alegere == 2) {
+            if(rand() % 2 == 0) {
+                std::cout << "\n[SUCCESS] Proful te vede emotionat, te iarta pentru intrebarea asta si trece la urmatoarea!\n";
+                dificultate -= 10;
+                student->modificaEnergie(-5);
+            }
+            else {
+                std::cout << "\n[FAIL] Degeaba, nu-l poti fenta de data asta!\n";
+                student->modificaEnergie(-5);
+            }
+        }
+        else if(alegere == 3) {
+            if(rand() % 2 == 0) {
+                if(ghiozdan->esteGol()) {
+                    std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
+                    continue;
+                }
+                std::cout << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n";
+                ghiozdan->afiseazaElemente();
+                std::cout << "Alegerea ta: ";
+                int index_item;
+                std::cin >> index_item;
+                try {
+                    Item* it = ghiozdan->getElement(index_item);
+                    it->foloseste(student, dificultate);
+                    delete it;
+                } catch (const std::out_of_range& e) {
+                    std::cout << "Index invalid! Pierzi timpul!\n";
+                }
+            }
+            else {
+                std::cout << "\n[FAIL] Profesorul nu te lasa sa folosesti niciun item! Trebuie sa te descurci singur!\n";
+            }
+            
+        }
+        else {
+            std::cout << "Alegere invalida. Pierzi timpul!\n";
+        }
+        std::cout << "-> Stresul examenului iti mai consuma 5 energie.\n";
+        student->modificaEnergie(-5);
+    }
+    if (student->getEnergie() <= 0) {
+        std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
+    } else if (dificultate <= 0) {
+        std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+    }
+};
+
+ExamenGrila::ExamenGrila(std::string materie) : Examen(materie, 40, 20, 3) {}
+void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
+    std::cout << "==================================\n";
+    std::cout << "INCEPE EXAMENUL GRILA LA " << getNume() << "!\n";
+    std::cout << "Dificultate: " << getDificultate() << "\n";
+    std::cout << "Tocmai ai primit foaia de examen cu grile! Timpul se scurge...\n";
+
+};

@@ -19,3 +19,12 @@ void Student::invata(int ore) {
             std::cout << "\n ar fi o idee buna sa bea o cafeluta! \n";
         }
 };
+int Student::getEnergie() const {
+    return nivel_energie;
+};
+void Student::modificaEnergie(int cantitate) {
+    nivel_energie += cantitate;
+    if (nivel_energie < 0) {
+        nivel_energie = 0;
+    }
+};

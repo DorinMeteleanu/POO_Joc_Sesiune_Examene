@@ -14,5 +14,7 @@ public:
     Student(std::string nume, int energie, int stres, std::string specializare, int an_studiu, int credite, double media);
     void afiseaza_status() const override;
     void invata(int ore);
+    int getEnergie() const;
+    void modificaEnergie(int cantitate);
     ~Student() {}
 };

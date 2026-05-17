@@ -7,14 +7,15 @@
 template <typename T>
 class Ghiozdan {
 private:
-    std::vector<T> elemente;
+    std::vector<T*> elemente;
     int capacitate_maxima;
 public:
     Ghiozdan(int capacitate) : capacitate_maxima(capacitate) {}
-    void adauga(const T* element) {
+    void adauga(T* element) {
         if (elemente.size() < capacitate_maxima) {
-            elemente.push_back(*element);
+            elemente.push_back(element);
         } else {
+            delete element;
             throw std::overflow_error("Ghiozdanul este plin!");
         }
     }
@@ -26,12 +27,12 @@ public:
             std::cout << "Ghiozdanul este gol!" << std::endl;
             return;
         }
-        for (const auto& element : elemente) {
-            std::cout << element << std::endl;
+        for (size_t i = 0; i < elemente.size(); ++i) {
+            std::cout << i << ": " << elemente[i]->getNume() << std::endl;
         }
     }
     T* getElement(int index) {
-        if(index < 0 || index >= elemente.size()) {
+        if(index < 0 || index >= (int)(elemente.size())) {
             throw std::out_of_range("Index invalid!");
         }
         T* element_ales = elemente[index];
@@ -40,5 +41,10 @@ public:
     }
     bool esteGol() const {
         return elemente.empty();
+    }
+    ~Ghiozdan() {
+        for (auto& element : elemente) {
+            delete element;
+        }
     }
 };
