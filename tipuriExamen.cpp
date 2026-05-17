@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 //EXAMEN SCRIS
-ExamenScris :: ExamenScris(std::string materie) : Examen(materie, 60, 15, 5) {}
+ExamenScris::ExamenScris(std::string materie) : Examen(materie, 60, 15, 5) {}
 void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     int dificultate = getDificultate();
     std::cout << "==================================\n";
@@ -18,7 +18,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "Alege o actiune: \n";
         std::cout << "1. Raspunzi la o cerinta (-15 dificultate, -10 energie, -15 timp)\n";
         std::cout << "2. Iei o pauza de respirat (+5 energie, -5 timp)\n";
-        std::cout << "3. Incerci sa copiezi (Risc! 50% sanse de succes)\n";
+        std::cout << "3. Incerci sa copiezi (Risc! 50 la suta sanse de succes)\n";
         std::cout << "4. Folosesti un item de ajutor? (+? energie, -5 timp)\n";
         std::cout << "Alegerea ta: ";
         int alegere;

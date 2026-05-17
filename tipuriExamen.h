@@ -1,5 +1,7 @@
 #pragma once
 #include "examen.h"
+#include "ghiozdan.h"
+#include "item.h"
 class ExamenScris : public Examen {
 public:
     ExamenScris(std::string materie);

@@ -3,6 +3,8 @@
 #include <string>
 #include "materie.h"
 #include "student.h"
+#include "ghiozdan.h"
+#include "item.h"
 class Examen {
 private:
     std::string nume;
@@ -12,7 +14,7 @@ private:
 public:
     Examen(std::string nume, int dificultate, int stres_provocat, int credite);
     virtual ~Examen();
-    virtual void sustineExamen(Student* student) = 0;
+    virtual void sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) = 0;
 
     std::string getNume() const;
     int getDificultate() const;
