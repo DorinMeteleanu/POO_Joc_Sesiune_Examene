@@ -22,3 +22,5 @@ void Examen::primesteRezolvare(int putere_student) {
 bool Examen::estePromovat() const {
     return dificultate == 0;
 };
+
+Examen::~Examen() {}

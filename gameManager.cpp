@@ -72,7 +72,7 @@ void GameManager::pornesteJocul() {
             case 1:
                 student->afiseaza_status();
                 break;
-            case 2:
+            case 2: {
                 int conf = 0;
                 int ore = 0;
                 while(conf == 0) {
@@ -85,11 +85,14 @@ void GameManager::pornesteJocul() {
                     conf = inp;
                 }
                 student->invata(ore);
-            case 3:
+                break;
+            }
+            case 3: {
                 Examen* e = ExamenFactory::genereazaExamenAleatoriu();
                 e->sustineExamen(student, ghiozdan);
                 delete e;
                 break;
+            }
             case 4:
                 magazin();
                 break;
@@ -101,10 +104,32 @@ void GameManager::pornesteJocul() {
                 break;
             case 7:
                 std::cout << "Te mai asteptam pe la examen (nu scapi asa usor)\n";
+                break;
             default:
                 std::cout << "Optiune invalida\n";
         }
     }
+};
+
+void GameManager::salveazaJoc() {
+    json j;
+    j["energie"] = student->getEnergie();
+    std::ofstream file("salvare.json");
+    file << j.dump(4);
+    std::cout << "Progres salvat\n";
+};
+
+void GameManager::incarcaJoc() {
+    std::ifstream file("salvare.json");
+    if(!file) {
+        std::cout << "Nu exista progres de joc salvat\n";
+        return;
+    }
+    json j;
+    file >> j;
+    int en = j["energie"];
+    student->modificaEnergie(en - student->getEnergie());
+    std::cout << "Energie restaurata din fisier!\n";
 };
 
 GameManager::~GameManager(){
