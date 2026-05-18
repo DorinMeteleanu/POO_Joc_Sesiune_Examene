@@ -15,6 +15,8 @@ public:
     void afiseaza_status() const override;
     void invata(int ore);
     int getEnergie() const;
+    int getCredite() const;
+    void adaugaCredite(int n);
     void modificaEnergie(int cantitate);
     ~Student() {}
 };

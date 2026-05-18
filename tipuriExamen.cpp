@@ -73,6 +73,8 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
     } else if (dificultate <= 0) {
         std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+        student->adaugaCredite(getCredite());
+        std::cout << "Total de credite curent: " << student->getCredite() << "\n";
     }
 };
 
@@ -144,6 +146,8 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
     } else if (dificultate <= 0) {
         std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+        student->adaugaCredite(getCredite());
+        std::cout << "Total de credite curent: " << student->getCredite() << "\n";
     }
 };
 
@@ -221,6 +225,8 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     } else if (dificultate <= 0 ) {
         if(grile >= 3) {
             std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+            student->adaugaCredite(getCredite());
+            std::cout << "Total de credite curent: " << student->getCredite() << "\n";
         }
         else {
             std::cout << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul";

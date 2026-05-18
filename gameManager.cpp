@@ -25,13 +25,16 @@ GameManager::GameManager() {
     std::cin.ignore();
     student = new Student(nume_student, 150, 20, specializare, an_studiu, 0, 0.0);
     ghiozdan = new Ghiozdan<Item>(5);
+    std::cout << "Regulile sunt simple. Sesiunea aceasta trebuie sa strangi 20 de credite pentru a promova.\n";
+    std::cout << "Poti sa redai examene, nu conteaza la ce materii le iei atat timp cat atingi pragul de credite\n";
+    std::cout << "Insa ai grija, zilele acestea orice te costa energie. Daca ramai pe 0... ne vedem la toamna.\n";
 
 };
 
 void GameManager::afiseazaMeniu() {
     std::cout << "\n[=============COLTUL TAU DE STUDIU=============]\n";
     std::cout << "1. Vezi status student\n";
-    std::cout << "2. Invata (pierzi energie cat de 2 ori nr de ore de studiu)";
+    std::cout << "2. Invata (pierzi energie cat de 2 ori nr de ore de studiu)\n";
     std::cout << "3. !!!---MERGI LA EXAMEN---!!!\n";
     std::cout << "4. Magazin de aprovizionare\n";
     std::cout << "5. Salveaza progresul jocului\n";
@@ -91,6 +94,13 @@ void GameManager::pornesteJocul() {
                 Examen* e = ExamenFactory::genereazaExamenAleatoriu();
                 e->sustineExamen(student, ghiozdan);
                 delete e;
+                if(student->getCredite() >= 20) {
+                    std::cout << "\n================================\n";
+                    std::cout << "FELICITARI! Ai adunat " << student->getCredite() << " credite!\n";
+                    std::cout << "Ai promovat anul si ai scapat de sesiune!!\n";
+                    std::cout << "\n================================\n";
+                    optiune = 7;
+                }
                 break;
             }
             case 4:

@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <vector>
 #include "examen.h"
 #include "tipuriExamen.h"
 class ExamenFactory {

@@ -28,3 +28,11 @@ void Student::modificaEnergie(int cantitate) {
         nivel_energie = 0;
     }
 };
+
+int Student::getCredite() const {
+    return credite_acumulate;
+};
+
+void Student::adaugaCredite(int n) {
+    credite_acumulate += n;
+};
