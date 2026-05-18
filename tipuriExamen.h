@@ -18,4 +18,5 @@ class ExamenGrila : public Examen {
 public:
     ExamenGrila(std::string materie);
     void sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) override;
+
 };

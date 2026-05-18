@@ -76,6 +76,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     }
 };
 
+//EXAMEN ORAL
 ExamenOral::ExamenOral(std::string materie) : Examen(materie, 30, 10, 2) {}
 void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "==================================\n";
@@ -146,11 +147,84 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     }
 };
 
+
+//EXAMEN GRILA
 ExamenGrila::ExamenGrila(std::string materie) : Examen(materie, 40, 20, 3) {}
 void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "==================================\n";
     std::cout << "INCEPE EXAMENUL GRILA LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
     std::cout << "Tocmai ai primit foaia de examen cu grile! Timpul se scurge...\n";
+    std::cout << "Acest examen este mai simplu decat unul scris, dar nu lasa garda jos, are si el un nr cinstit de credite\n";
+    std::cout << "Acest tip de examen are corectura la final, iti trebuie mai mult de 3 grile corecte pentru a lua creditele!\n";
+
+    int dificultate = getDificultate();
+    int grile = 0;
+    while (dificultate > 0 && student->getEnergie() > 0) {
+        std::cout << "-> Dificultate ramasa: " << dificultate << "\n";
+        std::cout << "-> Energia ramasa: " << student->getEnergie() << "\n";
+        std::cout << "-> Grile corecte: " << grile << "\n";
+        std::cout << "Alege o actiune: \n";
+        std::cout << "1. Rezolvi corect o grila (umpli o ciorna si afli rezultatul bun) (-10 dificultate, -10 energie, +1 grila corecta) \n";
+        std::cout << "2. Ghicesti la intamplare (-10 dificultate, -5 energie, 50 la suta sanse de corectitudine)\n";
+        std::cout << "3. Folosesti un item de ajutor? \n";
+
+        int alegere;
+        std::cin >> alegere;
+        if(alegere == 1) {
+            std::cout << "\n[!] Ti-a dat bine intr-un final, pune raspunsul in caseta!!\n";
+            dificultate -= 10;
+            student->modificaEnergie(-10);
+            grile++;
+        }
+        else if(alegere == 2) {
+            if(rand() % 2 == 0) {
+                std::cout << "\n[SUCCESS] Se pare ca in final acest raspuns a fost corect!\n";
+                dificultate -= 10;
+                student->modificaEnergie(-5);
+                grile++;
+            }
+            else {
+                std::cout << "\n[FAIL] Womp womp...aceasta grila a fost corectata ca fiind gresita!\n";
+                dificultate -= 10;
+                student->modificaEnergie(-5);
+
+            }
+        }
+        else if(alegere == 3) {
+            if(ghiozdan->esteGol()) {
+                std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
+                continue;
+            }
+            std::cout << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n";
+            ghiozdan->afiseazaElemente();
+            std::cout << "Alegerea ta: ";
+            int index_item;
+            std::cin >> index_item;
+            try {
+                Item* it = ghiozdan->getElement(index_item);
+                it->foloseste(student, dificultate);
+                delete it;
+            } catch (const std::out_of_range& e) {
+                std::cout << "Index invalid! Pierzi timpul!\n";
+            }
+            
+        }
+        else {
+            std::cout << "Alegere invalida. Pierzi timpul!\n";
+        }
+        std::cout << "-> Stresul examenului iti mai consuma 5 energie.\n";
+        student->modificaEnergie(-5);
+    }
+    if (student->getEnergie() <= 0) {
+        std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
+    } else if (dificultate <= 0 ) {
+        if(grile >= 3) {
+            std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+        }
+        else {
+            std::cout << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul";
+        }
+    }
 
 };
