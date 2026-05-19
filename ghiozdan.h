@@ -39,6 +39,13 @@ public:
         elemente.erase(elemente.begin() + index);
         return element_ales;
     }
+
+    T* inspectElement(int index) const {
+        if(index < 0 || index >= (int)(elemente.size())) {
+            throw std::out_of_range("Index invalid!");
+        }
+        return elemente[index];
+    }
     bool esteGol() const {
         return elemente.empty();
     }

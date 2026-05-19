@@ -16,6 +16,10 @@ private:
     int stres_curent;
 public:
     Student(std::string nume, int energie, int stres, std::string specializare, int an_studiu, int credite, double media);
+    std::string getNume() const;
+    std::string getSpecializare() const;
+    int getAnStudiu() const;
+    double getMedieGenerala() const;
     void afiseaza_status() const override;
     void invata(int ore);
     int getEnergie() const;
@@ -28,5 +32,11 @@ public:
     int getBonus() const;
     void reseteazaBonus(int reducere);
     void relaxare();
+    int getStresCurent() const;
+
+    void setStres(int s);
+    void setBani(int b);
+    void setBonus(int b);
+
     ~Student() {}
 };
