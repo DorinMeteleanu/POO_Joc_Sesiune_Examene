@@ -20,6 +20,8 @@ public:
     void sustineExamen();
     void afiseazaMeniu();
 
+    void evenimentAleatoriu();
+
     void salveazaJoc();
     void incarcaJoc();
     ~GameManager();

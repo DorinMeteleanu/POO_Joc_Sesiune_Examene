@@ -42,6 +42,9 @@ public:
     bool esteGol() const {
         return elemente.empty();
     }
+    bool estePlin() const {
+        return elemente.size() >= capacitate_maxima;
+    }
     ~Ghiozdan() {
         for (auto& element : elemente) {
             delete element;

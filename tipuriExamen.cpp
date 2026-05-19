@@ -2,6 +2,7 @@
 #include "ghiozdan.h"
 #include <iostream>
 #include <cstdlib>
+#include "ui_util.h"
 
 //EXAMEN SCRIS
 ExamenScris::ExamenScris(std::string materie) : Examen(materie, 60, 30, 5) {}
@@ -16,11 +17,11 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "-> Energia ramasa: " << student->getEnergie() << "\n";
 
         std::cout << "Alege o actiune: \n";
-        std::cout << "1. Raspunzi la o cerinta (-15 dificultate, -10 energie, -15 timp)\n";
-        std::cout << "2. Iei o pauza de respirat (+5 energie, -5 timp)\n";
+        std::cout << "1. Raspunzi la o cerinta (-15 dificultate, -10 energie)\n";
+        std::cout << "2. Iei o pauza de respirat (+5 energie)\n";
         std::cout << "3. Incerci sa copiezi (Risc! 50 la suta sanse de succes)\n";
         std::cout << "4. Folosesti bonus de pregatire din ce ai studiat acasa (-7 bonus, -10 dificulate)\n";
-        std::cout << "5. Folosesti un item de ajutor? (+? energie, -5 timp)\n";
+        std::cout << "5. Folosesti un item de ajutor? (+? energie)\n";
         std::cout << "Alegerea ta: ";
         int alegere;
         std::cin >> alegere;
@@ -36,16 +37,16 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         }
         else if(alegere == 3) {
             if(rand() % 2 == 0) {
-                std::cout << "\n[SUCCESS] Ai vazut raspunsul! Scazi 30 pct din examen!\n";
+                std::cout << "\n" << GREEN << "[SUCCESS] " << RESET << "Ai vazut raspunsul! Scazi 30 pct din examen!\n";
                 dificultate -= 30;
             }
             else {
-                std::cout << "\n[FAIL] Ai primit avertisment! Te-ai panicat maxim si pierzi 20 energie!\n";
+                std::cout << "\n" << RED << "[FAIL] " << RESET <<  "Ai primit avertisment! Te-ai panicat maxim si pierzi 20 energie!\n";
                 student->modificaEnergie(-20);
                 dificultate += 10;
             }
         }
-        else if(alegere == 3) {
+        else if(alegere == 4) {
             int bonus = student->getBonus();
             if(bonus <= 6) {
                 std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";

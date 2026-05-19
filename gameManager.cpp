@@ -3,6 +3,7 @@
 #include <fstream>
 #include "json.hpp"
 #include <stdexcept>
+#include "ui_util.h"
 using json = nlohmann::json;
 
 GameManager* GameManager::instanta = nullptr;
@@ -33,14 +34,15 @@ GameManager::GameManager() {
 
 void GameManager::afiseazaMeniu() {
     std::cout << "\n[=============COLTUL TAU DE STUDIU=============]\n";
-    std::cout << "1. Vezi status student\n";
-    std::cout << "2. Invata (perzi de 2 ori energie si castigi de 3 ori stres)\n";
-    std::cout << "3. !!!---MERGI LA EXAMEN---!!!\n";
-    std::cout << "4. Relaxare (-20 lei)\n";
-    std::cout << "5. Magazin de aprovizionare\n";
-    std::cout << "6. Salveaza progresul jocului\n";
-    std::cout << "7. Incarca progres\n";
-    std::cout << "8. Abandoneaza facultatea (Iesire)\n";
+    std::cout << "1. " << BLUE << "Vezi status student" << RESET << "\n";
+    std::cout << "2. " << BLUE << "Invata" << RESET << " (perzi de 2 ori energie si castigi de 3 ori stres)\n";
+    std::cout << "3. " << RED << "!!!---MERGI LA EXAMEN---!!!" << RESET << "\n";
+    std::cout << "4. " << BLUE << "Relaxare " << RESET <<  "(-20 lei)\n";
+    std::cout << "5. " << BLUE << "Magazin de aprovizionare" << RESET << "\n";
+    std::cout << "6. " << YELLOW << "Salveaza progresul jocului" << RESET << "\n";
+    std::cout << "7. " << YELLOW << "Incarca progres" << RESET << "\n";
+    std::cout << "8. " << BLUE << "Abandoneaza facultatea" << RESET << " (Iesire)\n";
+    std::cout << "[==============================================]\n";
 };
 
 void GameManager::magazin() {
@@ -86,9 +88,26 @@ void GameManager::magazin() {
 
 };
 
+void GameManager::evenimentAleatoriu() {
+    int sansa = rand() % 100;
+    if(sansa < 20) {
+        int tip = rand() % 2;
+        std::cout << "\n[EVENIMENT NEASTEPTAT] \n";
+        if(tip == 0) {
+            std::cout << "Ai gasit 15 lei pe jos. Brusc nu te mai simti sarac.\n";
+            student->modificaBani(15);
+        }
+        else if(tip == 1) {
+            std::cout << "Profesorul a intarziat 20 de minute. Ai dormit cu capul pe banca. (+10 energie)\n";
+            student->modificaEnergie(10);
+        }
+    }
+};
+
 void GameManager::pornesteJocul() {
     int optiune = 0;
     while(optiune != 8) {
+        evenimentAleatoriu();
         afiseazaMeniu();
         std::cin >> optiune;
         switch(optiune) {

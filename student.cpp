@@ -49,6 +49,9 @@ int Student::getBani() const {
 
 void Student::modificaBani(int cantitate) {
     bani += cantitate;
+    if(bani < 0) {
+        bani = 0;
+    }
 };
 
 int Student::getBonus() const {
