@@ -19,7 +19,8 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "1. Raspunzi la o cerinta (-15 dificultate, -10 energie, -15 timp)\n";
         std::cout << "2. Iei o pauza de respirat (+5 energie, -5 timp)\n";
         std::cout << "3. Incerci sa copiezi (Risc! 50 la suta sanse de succes)\n";
-        std::cout << "4. Folosesti un item de ajutor? (+? energie, -5 timp)\n";
+        std::cout << "4. Folosesti bonus de pregatire din ce ai studiat acasa (-7 bonus, -10 dificulate)\n";
+        std::cout << "5. Folosesti un item de ajutor? (+? energie, -5 timp)\n";
         std::cout << "Alegerea ta: ";
         int alegere;
         std::cin >> alegere;
@@ -44,7 +45,21 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 dificultate += 10;
             }
         }
-        else if(alegere == 4) {
+        else if(alegere == 3) {
+            int bonus = student->getBonus();
+            if(bonus <= 6) {
+                std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";
+                continue;
+            }
+            else {
+                dificultate -= 10;
+                student->reseteazaBonus(7);
+                if(dificultate < 5) {
+                    dificultate = 5;
+                }
+            }
+        }
+        else if(alegere == 5) {
             if(ghiozdan->esteGol()) {
                 std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
                 continue;
@@ -92,7 +107,8 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "Alege o actiune: \n";
         std::cout << "1. Raspunzi direct la o intrebare (-10 dificultate, -15 energie) \n";
         std::cout << "2. Zambesti carismatic sperand sa te ajute (-5 energie, -10 dificultate (dar cu 50 la suta sanse)) \n";
-        std::cout << "3. Ceri voie la un item de ajutor? (50 la suta sanse sa te lase) \n";
+        std::cout << "3. Folosesti bonus de pregatire din ce ai studiat acasa (-5 bonus, -5 dificultate) \n";
+        std::cout << "4. Ceri voie la un item de ajutor? (50 la suta sanse sa te lase) \n";
         int alegere;
         std::cin >> alegere;
 
@@ -113,6 +129,20 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             }
         }
         else if(alegere == 3) {
+            int bonus = student->getBonus();
+            if(bonus <= 4) {
+                std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";
+                continue;
+            }
+            else {
+                dificultate -= 5;
+                student->reseteazaBonus(5);
+                if(dificultate < 5) {
+                    dificultate = 5;
+                }
+            }
+        }
+        else if(alegere == 4) {
             if(rand() % 2 == 0) {
                 if(ghiozdan->esteGol()) {
                     std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
@@ -171,7 +201,8 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "Alege o actiune: \n";
         std::cout << "1. Rezolvi corect o grila (umpli o ciorna si afli rezultatul bun) (-10 dificultate, -10 energie, +1 grila corecta) \n";
         std::cout << "2. Ghicesti la intamplare (-10 dificultate, -5 energie, 50 la suta sanse de corectitudine)\n";
-        std::cout << "3. Folosesti un item de ajutor? \n";
+        std::cout << "3. Folosesti bonus de pregatire din ce ai studiat acasa (-5 bonus, -10 dificultate, +1 grila corecta)\n";
+        std::cout << "4. Folosesti un item de ajutor? \n";
 
         int alegere;
         std::cin >> alegere;
@@ -196,6 +227,18 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             }
         }
         else if(alegere == 3) {
+            int bonus = student->getBonus();
+            if(bonus <= 4) {
+                std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";
+                continue;
+            }
+            else {
+                dificultate -= 10;
+                student->reseteazaBonus(5);
+                grile++;
+            }
+        }
+        else if(alegere == 4) {
             if(ghiozdan->esteGol()) {
                 std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
                 continue;

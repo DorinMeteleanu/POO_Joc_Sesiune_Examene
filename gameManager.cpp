@@ -34,31 +34,51 @@ GameManager::GameManager() {
 void GameManager::afiseazaMeniu() {
     std::cout << "\n[=============COLTUL TAU DE STUDIU=============]\n";
     std::cout << "1. Vezi status student\n";
-    std::cout << "2. Invata (pierzi energie cat de 2 ori nr de ore de studiu)\n";
+    std::cout << "2. Invata (perzi de 2 ori energie si castigi de 3 ori stres)\n";
     std::cout << "3. !!!---MERGI LA EXAMEN---!!!\n";
-    std::cout << "4. Magazin de aprovizionare\n";
-    std::cout << "5. Salveaza progresul jocului\n";
-    std::cout << "6. Incarca progres\n";
-    std::cout << "7. Abandoneaza facultatea (Iesire)\n";
+    std::cout << "4. Relaxare (-20 lei)\n";
+    std::cout << "5. Magazin de aprovizionare\n";
+    std::cout << "6. Salveaza progresul jocului\n";
+    std::cout << "7. Incarca progres\n";
+    std::cout << "8. Abandoneaza facultatea (Iesire)\n";
 };
 
 void GameManager::magazin() {
     std::cout << "[================MAGAZIN================]\n";
-    std::cout << "1. Cumpara Cafea (Energie +20)\n";
-    std::cout << "2. Cumpara Sticla de Apa (Energie +5)\n";
-    std::cout << "3. Cumpara Copiuta (pentru examene scrise si grila)\n";
+    std::cout << "Bani in portofel: " << student->getBani() << " lei\n";
+    std::cout << "1. Cumpara Cafea (-20 lei, Energie +20)\n";
+    std::cout << "2. Cumpara Sticla de Apa (-7 lei, Energie +5)\n";
+    std::cout << "3. Cumpara Copiuta (-40 lei, pentru examene scrise si grila (din surse sigure evident))\n";
     std::cout << "Alegerea ta: ";
     int op;
     std::cin >> op;
     try {
         if(op == 1) {
-            ghiozdan->adauga(new Cafea());
+            if(student->getBani() < 20) {
+                std::cout << "Nu ai destui bani pentru o cafea.\n";
+            }
+            else {
+                student->modificaBani(-20);
+                ghiozdan->adauga(new Cafea());
+            }
         }
         else if (op == 2) {
-            ghiozdan->adauga(new SticlaApa());
+                if(student->getBani() < 7) {
+                std::cout << "Nu ai destui bani pentru o apa (chiar asa?).\n";
+            }
+            else {
+                student->modificaBani(-7);
+                ghiozdan->adauga(new SticlaApa());
+            }
         }
         else if(op == 3) {
-            ghiozdan->adauga(new Copiuta());
+            if(student->getBani() < 40) {
+                std::cout << "Vezi ca astea sunt scumpe vere, nu cresc in copaci.\n";
+            }
+            else {
+                student->modificaBani(-40);
+                ghiozdan->adauga(new Copiuta());
+            }
         }
     } catch (const std::exception& e) {
         std::cout << "Eroare: " << e.what() << "\n";
@@ -68,7 +88,7 @@ void GameManager::magazin() {
 
 void GameManager::pornesteJocul() {
     int optiune = 0;
-    while(optiune != 7) {
+    while(optiune != 8) {
         afiseazaMeniu();
         std::cin >> optiune;
         switch(optiune) {
@@ -103,16 +123,32 @@ void GameManager::pornesteJocul() {
                 }
                 break;
             }
-            case 4:
+            case 4: {
+                if(student->getBani() < 20) {
+                    std::cout << "Nu ai destui bani ca sa te relaxezi in oras. Fa rost de bani\n";
+                }
+                else {
+                    std::cout << "Te va costa 20 de lei o iesire in oras care sa iti scada stresul. Accepti? (1 pentru DA sau 0 pentru NU)\n";
+                    int op;
+                    std::cin >> op;
+                    if(op) {
+                        student->modificaBani(-20);
+                        student->relaxare();
+                    }
+                    break;
+                }
+            }
+
+            case 5:
                 magazin();
                 break;
-            case 5: 
+            case 6: 
                 salveazaJoc();
                 break;
-            case 6:
+            case 7:
                 incarcaJoc();
                 break;
-            case 7:
+            case 8:
                 std::cout << "Te mai asteptam pe la examen (nu scapi asa usor)\n";
                 break;
             default:
