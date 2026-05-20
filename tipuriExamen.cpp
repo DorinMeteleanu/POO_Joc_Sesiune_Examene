@@ -38,13 +38,13 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cin >> alegere;
 
         if(alegere == 1) {
-            std::cout << "\n[!] Ai umplut o pagina de formule!\n";
+            std::cout << GREEN << "\n[!] Ai umplut o pagina de formule!\n" << RESET;
             dificultate -= 15;
             student->modificaEnergie(-20);
         }
         else if (alegere == 2) {
             if(cooldown_relaxare > 0) {
-                std::cout << YELLOW << "Prea devreme! Profesorul se uita urat la tine daca mai iei o pauza acum. Ateapta o tura\n" << RESET;
+                std::cout << YELLOW << "[?] Prea devreme! Profesorul se uita urat la tine daca mai iei o pauza acum. Ateapta o tura\n" << RESET;
                 continue;
             }
             std::cout << "\n[!] Te uiti pe pereti 5 minute sa te calmezi.\n";
@@ -82,7 +82,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 std::cout << YELLOW << "E prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
             }
             if(ghiozdan->esteGol()) {
-                std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
+                std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n" << RESET;
                 continue;
             }
             std::cout << "[!] Ce item doresti sa folosesti? \n";
@@ -108,9 +108,9 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     }
 
     if (student->getEnergie() <= 0) {
-        std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
+        std::cout << RED << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n" << RESET;
     } else if (dificultate <= 0) {
-        std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+        std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
         student->adaugaCredite(getCredite());
         std::cout << "Total de credite curent: " << student->getCredite() << "\n";
     }
@@ -141,25 +141,25 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cin >> alegere;
 
         if(alegere == 1) {
-            std::cout << "\n[!] Profesorul pare impresionat. Tine-o tot asa daca poti!\n";
+            std::cout << GREEN << "\n[!] Profesorul pare impresionat. Tine-o tot asa daca poti!\n" << RESET;
             dificultate -= 10;
             student->modificaEnergie(-15);
         }
         else if(alegere == 2) {
             if(rand() % 2 == 0) {
-                std::cout << "\n[SUCCESS] Proful te vede emotionat, te iarta pentru intrebarea asta si trece la urmatoarea!\n";
+                std::cout << GREEN << "\n[SUCCESS] Proful te vede emotionat, te iarta pentru intrebarea asta si trece la urmatoarea!\n" << RESET;
                 dificultate -= 10;
                 student->modificaEnergie(-5);
             }
             else {
-                std::cout << "\n[FAIL] Degeaba, nu-l poti fenta de data asta!\n";
+                std::cout << YELLOW << "\n[FAIL] Degeaba, nu-l poti fenta de data asta!\n" << RESET;
                 student->modificaEnergie(-5);
             }
         }
         else if(alegere == 3) {
             int bonus = student->getBonus();
             if(bonus <= 4) {
-                std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";
+                std::cout << YELLOW << "[!] Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n" << RESET;
                 continue;
             }
             else {
@@ -173,10 +173,10 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         else if(alegere == 4) {
             if(rand() % 2 == 0) {
                 if(ghiozdan->esteGol()) {
-                    std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
+                    std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n" << RESET;
                     continue;
                 }
-                std::cout << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n";
+                std::cout << GREEN << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n" << RESET;
                 ghiozdan->afiseazaElemente();
                 std::cout << "Alegerea ta: ";
                 int index_item;
@@ -190,7 +190,7 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 }
             }
             else {
-                std::cout << "\n[FAIL] Profesorul nu te lasa sa folosesti niciun item! Trebuie sa te descurci singur!\n";
+                std::cout << YELLOW << "\n[FAIL] Profesorul nu te lasa sa folosesti niciun item! Trebuie sa te descurci singur!\n" << RESET;
             }
             
         }
@@ -201,9 +201,9 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         student->modificaEnergie(-5);
     }
     if (student->getEnergie() <= 0) {
-        std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
+        std::cout << RED << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n" << RESET;
     } else if (dificultate <= 0) {
-        std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+        std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
         student->adaugaCredite(getCredite());
         std::cout << "Total de credite curent: " << student->getCredite() << "\n";
     }
@@ -213,7 +213,7 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 //EXAMEN GRILA
 ExamenGrila::ExamenGrila(std::string materie, Profesor* p) : Examen(materie, 40, 20, 3, p) {}
 void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
-    std::cout << "==========================================================================\n";
+    std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
     std::cout << "INCEPE EXAMENUL GRILA LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
     std::cout << "Nu te stresa foarte tare, examenul grila e examen grila.\n";
@@ -241,20 +241,20 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         int alegere;
         std::cin >> alegere;
         if(alegere == 1) {
-            std::cout << "\n[!] Ti-a dat bine intr-un final, pune raspunsul in caseta!!\n";
+            std::cout << GREEN << "\n[!] Ti-a dat bine intr-un final, pune raspunsul in caseta!!\n" << RESET;
             dificultate -= 10;
             student->modificaEnergie(-10);
             grile++;
         }
         else if(alegere == 2) {
             if(rand() % 2 == 0) {
-                std::cout << "\n[SUCCESS] Se pare ca in final acest raspuns a fost corect!\n";
+                std::cout << GREEN << "\n[SUCCESS] Se pare ca in final acest raspuns a fost corect!\n" << RESET;
                 dificultate -= 10;
                 student->modificaEnergie(-5);
                 grile++;
             }
             else {
-                std::cout << "\n[FAIL] Womp womp...aceasta grila a fost corectata ca fiind gresita!\n";
+                std::cout << YELLOW << "\n[FAIL] Womp womp...aceasta grila a fost corectata ca fiind gresita!\n" << RESET;
                 dificultate -= 10;
                 student->modificaEnergie(-5);
 
@@ -263,7 +263,7 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         else if(alegere == 3) {
             int bonus = student->getBonus();
             if(bonus <= 4) {
-                std::cout << "Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n";
+                std::cout << YELLOW << "[!] Nu te-ai pregatit suficient acasa. Nu ai destul bonus. loser loser\n" << RESET;
                 continue;
             }
             else {
@@ -277,10 +277,10 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 std::cout << YELLOW << "E prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
             }
             if(ghiozdan->esteGol()) {
-                std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
+                std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n" << RESET;
                 continue;
             }
-            std::cout << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n";
+            std::cout << GREEN << "[!] Hai ca te lasa. Ce item doresti sa folosesti? \n" << RESET;
             ghiozdan->afiseazaElemente();
             std::cout << "Alegerea ta: ";
             int index_item;
@@ -303,15 +303,15 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     }
     
     if (student->getEnergie() <= 0) {
-        std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
+        std::cout << RED << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n" << RESET;
     } else if (dificultate <= 0 ) {
         if(grile >= 3) {
-            std::cout << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n";
+            std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
             student->adaugaCredite(getCredite());
             std::cout << "Total de credite curent: " << student->getCredite() << "\n";
         }
         else {
-            std::cout << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul";
+            std::cout << RED << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul" << RESET;
         }
     }
 
