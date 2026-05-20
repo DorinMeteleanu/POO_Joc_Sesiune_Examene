@@ -1,6 +1,6 @@
 #include "examen.h"
-Examen::Examen(std::string nume, int dificultate, int stres_provocat, int credite)
-    : nume(nume), dificultate(dificultate), stres_provocat(stres_provocat), credite(credite) {}
+Examen::Examen(std::string nume, int dificultate, int stres_provocat, int credite, Profesor* p)
+    : nume(nume), dificultate(dificultate), stres_provocat(stres_provocat), credite(credite), profesor(p) {}
 std::string Examen::getNume() const {
     return nume;
 };
@@ -23,4 +23,6 @@ bool Examen::estePromovat() const {
     return dificultate == 0;
 };
 
-Examen::~Examen() {}
+Examen::~Examen() {
+    delete profesor;
+};
