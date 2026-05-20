@@ -8,9 +8,16 @@
 ExamenScris::ExamenScris(std::string materie) : Examen(materie, 60, 30, 5) {}
 void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     int dificultate = getDificultate();
-    std::cout << "==================================\n";
+    std::cout << "===================================================================================\n";
     std::cout << "INCEPE EXAMENUL SCRIS LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << dificultate << "\n";
+    std::cout << "Examenele scrise sunt foarte grele si mananca multa energie, dar valoreaza multe credite.\n";
+    std::cout << "Ai grija cum iti gestionezi energia. Unoeri, nu se stie cand, stresul examenului iti va lua automat putin din energie.\n";
+    std::cout << "Sfat: Cand nu stai foarte bine cu energia, mai bine te concentrezi sa scapi de examen cu riscul de a nu lua creditele.\n";
+    std::cout << "\nApasa ENTER pentru a continua...";
+    std::cin.ignore(10000, '\n'); 
+    std::cin.get(); 
+
     std::cout << "Tocmai ai primit foaia de examen! Timpul se scurge...\n";
     while (dificultate > 0 && student->getEnergie() > 0) {
         std::cout << "-> Dificultate ramasa: " << dificultate << "\n";
@@ -97,9 +104,14 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 //EXAMEN ORAL
 ExamenOral::ExamenOral(std::string materie) : Examen(materie, 30, 10, 2) {}
 void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
-    std::cout << "==================================\n";
+    std::cout << "==========================================================================\n";
     std::cout << "INCEPE EXAMENUL ORAL LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
+    std::cout << "Acest tip de examen este destul de usor de trecut, in consecinta nu valoreaza prea multe credite.\n";
+    std::cout << "Te poti folosi si de noroc, insa aici conteaza foarte mult si de profesorul la care pici sa dai examenul oral.\n";
+    std::cout << "\nApasa ENTER pentru a continua...";
+    std::cin.ignore(10000, '\n'); 
+    std::cin.get(); 
     std::cout << "Tocmai ai intrat in sala de examen! Profesorul incepe sa iti adreseze intrebari...\n";
     int dificultate = getDificultate();
     while (dificultate > 0 && student->getEnergie() > 0) {
@@ -186,12 +198,17 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 //EXAMEN GRILA
 ExamenGrila::ExamenGrila(std::string materie) : Examen(materie, 40, 20, 3) {}
 void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
-    std::cout << "==================================\n";
+    std::cout << "==========================================================================\n";
     std::cout << "INCEPE EXAMENUL GRILA LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
-    std::cout << "Tocmai ai primit foaia de examen cu grile! Timpul se scurge...\n";
+    std::cout << "Nu te stresa foarte tare, examenul grila e examen grila.\n";
     std::cout << "Acest examen este mai simplu decat unul scris, dar nu lasa garda jos, are si el un nr cinstit de credite\n";
-    std::cout << "Acest tip de examen are corectura la final, iti trebuie mai mult de 3 grile corecte pentru a lua creditele!\n";
+    std::cout << "Acest tip de examen are corectura la final, dar vei vedea in timp real cate raspunsuri corecte ai.\n";
+    std::cout << "Iti trebuie mai mult de 3 grile corecte pentru a lua creditele!\n";
+    std::cout << "\nApasa ENTER pentru a continua...";
+    std::cin.ignore(10000, '\n'); 
+    std::cin.get(); 
+    std::cout << "Tocmai ai primit foaia de examen cu grile! Timpul se scurge...\n";
 
     int dificultate = getDificultate();
     int grile = 0;
