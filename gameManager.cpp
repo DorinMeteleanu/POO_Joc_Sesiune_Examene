@@ -70,17 +70,19 @@ void GameManager::afiseazaMeniu() {
     #else
         system("clear");
     #endif
-    std::cout << "\n[=============COLTUL LUI " << student->getNume() << " DE STUDIU=============]\n";
-    std::cout << "1. " << BLUE << "Vezi status student" << RESET << "\n";
-    std::cout << "2. " << BLUE << "Invata" << RESET << " (perzi de 2 ori energie si castigi de 3 ori stres)\n";
-    std::cout << "3. " << RED << "!!!---MERGI LA EXAMEN---!!!" << RESET << "\n";
-    std::cout << "4. " << BLUE << "Relaxare " << RESET <<  "(-20 lei)\n";
-    std::cout << "5. " << BLUE << "Magazin de aprovizionare" << RESET << "\n";
-    std::cout << "|==============================================|\n";
-    std::cout << "6. " << YELLOW << "Salveaza progresul jocului" << RESET << "\n";
-    std::cout << "7. " << YELLOW << "Incarca progres" << RESET << "\n";
-    std::cout << "8. " << BLUE << "Retrage-ti dosarul de la facultate" << RESET << " (Iesire)\n";
-    std::cout << "[==============================================]\n";
+    std::cout << "\n[<><><><><><><><><>COLTUL LUI " << student->getNume() << " DE STUDIU<><><><><><><><><>]\n";
+    std::cout << "1. Vezi status student\n";
+    std::cout << "2. Invata (perzi de 2 ori energie si castigi de 3 ori stres)\n";
+    std::cout << "3. !!!---MERGI LA EXAMEN---!!!\n";
+    std::cout << "4. Relaxare (-20 lei)\n";
+    std::cout << "5. Magazin de aprovizionare\n";
+    std::cout << "6. Vezi ce iteme ai in ghiozdan\n";
+    std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
+    std::cout << "7. " << YELLOW << "Salveaza progresul jocului" << RESET << "\n";
+    std::cout << "8. " << YELLOW << "Incarca progres" << RESET << "\n";
+    std::cout << "9. " << YELLOW << "Retrage-ti dosarul de la facultate" << RESET << " (Iesire)\n";
+    std::cout << "10. " << YELLOW << "TIPS" << RESET << "\n";
+    std::cout << "[<><><><><><><><><><><><><><><><><><><><><><><><><><><>]\n";
 };
 
 void GameManager::magazin() {
@@ -130,7 +132,7 @@ void GameManager::evenimentAleatoriu() {
     int sansa = rand() % 100;
     if(sansa < 20) {
         int tip = rand() % 2;
-        std::cout << "\n[EVENIMENT NEASTEPTAT] \n";
+        std::cout << MAGENTA << "\n[EVENIMENT NEASTEPTAT] \n" << RESET;
         if(tip == 0) {
             std::cout << "Ai gasit 15 lei pe jos. Brusc nu te mai simti sarac.\n";
             student->modificaBani(15);
@@ -201,14 +203,26 @@ void GameManager::pornesteJocul() {
             case 5:
                 magazin();
                 break;
-            case 6: 
+            case 6: {
+            if(ghiozdan->esteGol()) {
+                std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Ar fi o idee buna sa cumperi niste iteme pentru examen!\n" << RESET;
+                continue;
+            }
+            std::cout << "GHIOZDANUL LUI " << student->getNume() << "\n";
+            ghiozdan->afiseazaElemente();
+
+            }
+            case 7: 
                 salveazaJoc();
                 break;
-            case 7:
+            case 8:
                 incarcaJoc();
                 break;
-            case 8:
+            case 9:
                 std::cout << "Te mai asteptam pe la examen (nu scapi asa usor)\n";
+                break;
+            case 10:
+                tips();
                 break;
             default:
                 std::cout << "Optiune invalida\n";
@@ -240,6 +254,26 @@ void GameManager::pornesteJocul() {
             std::cin.get();             
         }
     }
+};
+
+void GameManager::tips() {
+    std::cout << YELLOW << "INFORMATII UTILE\n\n" << RESET;
+    std::cout << "Ai 3 tipuri de examene pe care le poti sustine: Scris, Oral, Grila. indiferent de tip, trebuie sa nu ramai cu energia la 0.\n";
+    std::cout << "De asemenea sunt 2 tipuri de profesor care te pot asista la examen: cel Exigent (Ionescu) si cel Relaxat (Popescu), fiecare cu tabieturile sale\n";
+    std::cout << "Daca il prinzi pe cel exigent, ai grija cum iti gestionezi resursele, este foarte imprevizibil.\n\n";
+    std::cout << "Examenul scris este cel mai lung, sa raspunzi direct la o intrebare te costa foarte multa energie...\n";
+    std::cout << "Examenul se termina daca reusesti sa reduci dificultatea acestuia la 0.\n";
+    std::cout << "Fie te echipezi bine cu resurse, fie mergi pe putin noroc.\n\n";
+    std::cout << "Examenul oral este mai simplu, dar depinde mult de tipul de profesor pe care il prinzi.\n";
+    std::cout << "La fel, trebuie sa reduci dificultatea examenului la 0, dar ai grija si la rabdarea profesorului, aceasta NU trebuie sa ajunga la 0.\n\n";
+    std::cout << "La examenul grila raspunzi la...grile. Diferenta e ca odata ce ai invins examenul, la final, trebuie sa ai peste 3 grile corecte ca sa aduni creditele.\n\n";
+    std::cout << "Daca reusesti sa iei note mari, asta fiind usor daca dispui de resurse multe, poti primi o anumita bursa care sa te ajute sa mai iei cateva iteme.\n";
+    std::cout << "Nu uita sa te echipezi cu iteme inainte sa intri intr-un examen.\n";
+    std::cout << "Fii mereu atent la nivelul de resurse ramas.\n\n";
+    std::cout << "Spor la strans credite!!\n";
+    std::cout << "\nApasa ENTER pentru a continua...";
+    std::cin.ignore(10000, '\n'); 
+    std::cin.get();
 };
 
 void GameManager::salveazaJoc() {

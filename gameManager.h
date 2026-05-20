@@ -24,6 +24,7 @@ public:
 
     void salveazaJoc();
     void incarcaJoc();
+    void tips();
     ~GameManager();
 
 };

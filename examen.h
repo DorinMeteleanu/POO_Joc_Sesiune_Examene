@@ -7,7 +7,7 @@
 #include "item.h"
 #include "profesor.h"
 class Examen {
-private:
+protected:
     std::string nume;
     int dificultate;
     int stres_provocat;
