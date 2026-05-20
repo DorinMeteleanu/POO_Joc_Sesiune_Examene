@@ -21,7 +21,7 @@ GameManager::GameManager() {
     #endif
 
     std::cout << YELLOW << "=================================\n";
-    std::cout << "      SIMULATOR DE SESIUNE (JOC HORROR)       \n";
+    std::cout << "SIMULATOR DE SESIUNE (JOC HORROR)\n";
     std::cout << "=================================\n" << RESET;
     std::cout << "1. Joc Nou\n";
     std::cout << "2. Continua (Incarca Salvare)\n";

@@ -4,7 +4,7 @@ Student::Student(std::string nume, int energie, int stres, std::string specializ
 void Student::afiseaza_status() const {
     std::cout << "Student: " << nume << "\n";
     std::cout << "Nivel ENERGIE: " << nivel_energie << "/ 150\n";
-    std::cout << "Nivel STRES: " << stres_curent << "\n";
+    std::cout << "Nivel STRES: " << stres_curent << " / " << rezistenta_stres << "\n";
     std::cout << "Bani in portofel: " << bani << "\n";
     std::cout << "Bonus din pregatire: " << bonus_pregatire << "\n";
     std::cout << "=================================\n";
