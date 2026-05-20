@@ -86,7 +86,7 @@ void GameManager::afiseazaMeniu() {
 };
 
 void GameManager::magazin() {
-    std::cout << "[================MAGAZIN================]\n";
+    std::cout << "[><><><><><><><><MAGAZIN><><><><><><><><]\n";
     std::cout << YELLOW << "Bani in portofel: " << RESET << student->getBani() << " lei\n";
     std::cout << "1. Cumpara Cafea (-20 lei, Energie +20)\n";
     std::cout << "2. Cumpara Sticla de Apa (-7 lei, Energie +5)\n";
@@ -146,7 +146,7 @@ void GameManager::evenimentAleatoriu() {
 
 void GameManager::pornesteJocul() {
     int optiune = 0;
-    while(optiune != 8) {
+    while(optiune != 9) {
         evenimentAleatoriu();
         afiseazaMeniu();
         std::cin >> optiune;
@@ -176,20 +176,20 @@ void GameManager::pornesteJocul() {
                 e->sustineExamen(student, ghiozdan);
                 delete e;
                 if(student->getCredite() >= 20) {
-                    std::cout << "\n================================\n";
-                    std::cout << "FELICITARI! Ai adunat " << student->getCredite() << " credite!\n";
+                    std::cout << "\n[!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!]\n";
+                    std::cout << GREEN << "FELICITARI!" << RESET << "Ai adunat " << student->getCredite() << " credite!\n";
                     std::cout << "Ai promovat anul si ai scapat de sesiune (deocamdata...)!!\n";
-                    std::cout << "\n================================\n";
+                    std::cout << "\n[!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!]\n";
                     optiune = 7;
                 }
                 break;
             }
             case 4: {
                 if(student->getBani() < 20) {
-                    std::cout << "Nu ai destui bani ca sa te relaxezi in oras. Fa rost de bani\n";
+                    std::cout << YELLOW << "[!] Nu ai destui bani ca sa te relaxezi in oras. Fa rost de bani\n" << RESET;
                 }
                 else {
-                    std::cout << "Te va costa 20 de lei o iesire in oras care sa iti scada stresul. Accepti? (1 pentru DA sau 0 pentru NU)\n";
+                    std::cout << "[!] Te va costa 20 de lei o iesire in oras care sa iti scada stresul. Accepti? (1 pentru DA sau 0 pentru NU)\n";
                     int op;
                     std::cin >> op;
                     if(op) {
@@ -208,7 +208,7 @@ void GameManager::pornesteJocul() {
                 std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Ar fi o idee buna sa cumperi niste iteme pentru examen!\n" << RESET;
                 continue;
             }
-            std::cout << "GHIOZDANUL LUI " << student->getNume() << "\n";
+            std::cout << "[><><><><><><><><GHIOZDANUL LUI " << student->getNume() << "><><><><><><><><\n";
             ghiozdan->afiseazaElemente();
 
             }
@@ -219,7 +219,10 @@ void GameManager::pornesteJocul() {
                 incarcaJoc();
                 break;
             case 9:
-                std::cout << "Te mai asteptam pe la examen (nu scapi asa usor)\n";
+                std::cout << "[hehe] Te mai asteptam pe la examene (nu scapi asa usor)\n";
+                std::cout << "\nApasa ENTER pentru a iesi din joc...";
+                std::cin.ignore(10000, '\n'); 
+                std::cin.get();
                 break;
             case 10:
                 tips();
@@ -235,7 +238,7 @@ void GameManager::pornesteJocul() {
             std::cout << "\nApasa ENTER pentru a iesi...";
             std::cin.ignore(10000, '\n'); 
             std::cin.get();
-            optiune = 8;
+            optiune = 9;
         }
         else if(student->getStresCurent() >= 25) {
             std::cout << "\n==================================================\n";
@@ -245,7 +248,7 @@ void GameManager::pornesteJocul() {
             std::cout << "\nApasa ENTER pentru a iesi...";
             std::cin.ignore(10000, '\n'); 
             std::cin.get();
-            optiune = 8;
+            optiune = 9;
         }
 
         if (optiune != 8) { 

@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "materie.h"
 #include "student.h"
 #include "ghiozdan.h"
 #include "item.h"

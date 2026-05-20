@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include "persoana.h"
-#include "materie.h"
 class Student : public Persoana {
 private:
     std::string specializare;
