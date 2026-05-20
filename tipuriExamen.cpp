@@ -19,6 +19,8 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "\nApasa ENTER pentru a continua...";
     std::cin.ignore(10000, '\n'); 
     std::cin.get(); 
+    int cooldown_relaxare = 0;
+    int cooldown_item = 0;
 
     std::cout << "Tocmai ai primit foaia de examen! Timpul se scurge...\n";
     while (dificultate > 0 && student->getEnergie() > 0) {
@@ -41,8 +43,13 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             student->modificaEnergie(-20);
         }
         else if (alegere == 2) {
+            if(cooldown_relaxare > 0) {
+                std::cout << YELLOW << "Prea devreme! Profesorul se uita urat la tine daca mai iei o pauza acum. Ateapta o tura\n" << RESET;
+                continue;
+            }
             std::cout << "\n[!] Te uiti pe pereti 5 minute sa te calmezi.\n";
             student->modificaEnergie(5);
+            cooldown_relaxare = 1;
         }
         else if(alegere == 3) {
             if(rand() % 2 == 0) {
@@ -71,6 +78,9 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             }
         }
         else if(alegere == 5) {
+            if(cooldown_item > 0) {
+                std::cout << YELLOW << "E prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
+            }
             if(ghiozdan->esteGol()) {
                 std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
                 continue;
@@ -87,13 +97,16 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             } catch (const std::out_of_range& e) {
                     std::cout << "Index invalid! Pierzi timpul!\n";
             }
-            
+            cooldown_item = 2;
         }
         else {
             std::cout << "Alegere invalida. Pierzi timpul!\n";
         }
         profesor->reactioneaza(student, dificultate);
+        if (cooldown_relaxare > 0) cooldown_relaxare--;
+        if (cooldown_item > 0) cooldown_item--;
     }
+
     if (student->getEnergie() <= 0) {
         std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
     } else if (dificultate <= 0) {
@@ -214,6 +227,7 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 
     int dificultate = getDificultate();
     int grile = 0;
+    int cooldown_item = 0;
     while (dificultate > 0 && student->getEnergie() > 0) {
         std::cout << "-> Dificultate ramasa: " << dificultate << "\n";
         std::cout << "-> Energia ramasa: " << student->getEnergie() << "\n";
@@ -259,6 +273,9 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             }
         }
         else if(alegere == 4) {
+            if(cooldown_item > 0) {
+                std::cout << YELLOW << "E prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
+            }
             if(ghiozdan->esteGol()) {
                 std::cout << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n";
                 continue;
@@ -275,13 +292,16 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             } catch (const std::out_of_range& e) {
                 std::cout << "Index invalid! Pierzi timpul!\n";
             }
+            cooldown_item = 2;
             
         }
         else {
             std::cout << "Alegere invalida. Pierzi timpul!\n";
         }
         profesor->reactioneaza(student, dificultate);
+        if(cooldown_item > 0) cooldown_item--;
     }
+    
     if (student->getEnergie() <= 0) {
         std::cout << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n";
     } else if (dificultate <= 0 ) {
