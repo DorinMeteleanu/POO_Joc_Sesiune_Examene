@@ -13,6 +13,8 @@ private:
     int bani;
     int bonus_pregatire;
     int stres_curent;
+
+    std::vector<int> note_obtinute;
 public:
     Student(std::string nume, int energie, int stres, std::string specializare, int an_studiu, int credite, double media);
     std::string getNume() const;
@@ -25,6 +27,8 @@ public:
     int getCredite() const;
     void adaugaCredite(int n);
     void modificaEnergie(int cantitate);
+
+    void adaugaNota(int nota);
 
     int getBani() const;
     void modificaBani(int cantitate);

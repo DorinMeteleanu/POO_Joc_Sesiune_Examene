@@ -10,7 +10,8 @@ protected:
 public:
     Profesor(std::string nume, int rabdare, int exigenta, std::string titlu);
     void afiseaza_status() const override;
-    void puneNota(Student* s, int dificultate_ramasa);
+    int puneNotaScris(int ture);
+    int puneNotaOral(int dificultate);
     std::string getTitluComplet() const;
     virtual void reactioneaza(Student* s, int& dificultate) = 0;
     void exmatriculeaza(Student* s);

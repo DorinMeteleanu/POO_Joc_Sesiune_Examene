@@ -102,6 +102,14 @@ void Student::setBonus(int b) {
     bonus_pregatire = b;
 };
 
+void Student::adaugaNota(int nota) {
+    note_obtinute.push_back(nota);
+    double suma = 0;
+    for(int n : note_obtinute) {
+        suma += n;
+    }
+    media_generala = suma/note_obtinute.size();
+};
 
 
 

@@ -7,13 +7,17 @@ void Profesor::afiseaza_status() const {
     std::cout << "Exigenta: " << rezistenta_stres;
 };
 
-void Profesor::puneNota(Student* s, int dificultate_ramasa) {
-        int nota = 10 - (dificultate_ramasa / 10);
-        if(nota < 1) {
-            nota = 1;
+int Profesor::puneNotaScris(int ture) {
+        int nota = 10 - (ture > 4 ? (ture - 4) : 0);
+        if(nota < 5) {
+            nota = 4;
         }
-        std::cout << YELLOW << "[CATALOG]" << RESET << "Profesorul " << nume << " ti-a trecut nota " << nota << " in carnet.\n";
+        return nota;
 };
+int Profesor::puneNotaOral(int dificultate) {
+        int nota = 10 - (dificultate/10);
+        return nota;
+}; 
 
 std::string Profesor::getTitluComplet() const {
     return titlu + " " + nume;
