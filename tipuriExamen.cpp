@@ -109,8 +109,8 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             std::cout << "\nAlegere invalida. Pierzi timpul!\n";
         }
         profesor->reactioneaza(student, dificultate);
-        if (cooldown_relaxare > 0) cooldown_relaxare--;
-        if (cooldown_item > 0) cooldown_item--;
+        if (cooldown_relaxare > 0 && alegere != 2) cooldown_relaxare--;
+        if (cooldown_item > 0 && alegere != 2) cooldown_item--;
         if(rand() % 4) {
             std::cout << YELLOW << "\n[!] Stresul examenului iti mai mananca 5 energie" << RESET;
             student->modificaEnergie(-5);

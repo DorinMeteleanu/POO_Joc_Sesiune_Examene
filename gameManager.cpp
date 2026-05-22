@@ -130,8 +130,7 @@ void GameManager::magazin() {
 };
 
 void GameManager::evenimentAleatoriu() {
-    int sansa = rand() % 100;
-    if(sansa < 20) {
+    if(rand() % 4 == 1) {
         int tip = rand() % 2;
         std::cout << MAGENTA << "\n[EVENIMENT NEASTEPTAT] \n" << RESET;
         if(tip == 0) {
@@ -142,6 +141,9 @@ void GameManager::evenimentAleatoriu() {
             std::cout << "Profesorul a intarziat 20 de minute. Ai dormit cu capul pe banca. (+10 energie)\n";
             student->modificaEnergie(10);
         }
+        std::cout << "\nApasa ENTER pentru a continua...";
+            std::cin.ignore(10000, '\n'); 
+            std::cin.get(); 
     }
 };
 
