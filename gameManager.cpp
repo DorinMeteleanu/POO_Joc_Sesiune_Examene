@@ -170,23 +170,34 @@ void GameManager::pornesteJocul() {
                     std::cout << YELLOW << "[!] Epuizat! Mai ai de dat " << student->getSTHardcore() << " examene.\n" << RESET;
                     break;
                 }
-                if(stil == 1 && student->getSTRelaxat() > 0) {
+                if(stil == 3 && student->getSTRelaxat() > 0) {
                     std::cout << YELLOW << "[!] Epuizat! Mai ai de dat " << student->getSTRelaxat() << " examene.\n" << RESET;
                     break;
                 }
                 if(stil == 1) {
+                    std::cout << "\nRezultatele sesiunii de studiu vor fi: -2*ore energie, +3*ore stres, +2*ore bonus \n";
                     student->setStrategie(new StrategieNormala()); 
                     student->setSTNormal(2); 
                 }
                 if(stil == 2) {
+                    std::cout << "\nRezultatele sesiunii de studiu vor fi: -3*ore energie, +5*ore stres, +4*ore bonus \n";
                     student->setStrategie(new StrategieHardcore()); 
                     student->setSTHardcore(3); 
                 }
                 if(stil == 3) {
+                    std::cout << "\nRezultatele sesiunii de studiu vor fi: -1*ore energie, +1*ore stres, +ore/2 bonus \n";
                     student->setStrategie(new StrategieRelaxata()); 
                     student->setSTRelaxat(1); 
                 }
-                student->invata(5);
+                int nr_ore;
+                std::cout << "Cate ore vrei sa inveti? ";
+                std::cin >> nr_ore;
+                student->invata(nr_ore);
+                if(stil != 1 && stil != 2 && stil != 3) {
+                    student->invata(nr_ore);
+                } else {
+                    std::cout << "Optiune invalida de studiu!\n";
+                }
                 break;
 
             }
