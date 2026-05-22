@@ -21,8 +21,13 @@ int Profesor::puneNotaOral(int dificultate) {
 
 int Profesor::puneNotaGrila(int grile) {
     int nota = grile * 2;
-    if(nota > 10) return 10;
-    if(nota < 4) return 4;
+    if(nota > 10){
+        return 10;
+    } else if(nota < 4) {
+        return 4;
+    } else {
+        return nota;
+    }
 };
 
 std::string Profesor::getTitluComplet() const {
