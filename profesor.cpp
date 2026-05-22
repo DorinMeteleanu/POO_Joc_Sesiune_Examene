@@ -19,12 +19,17 @@ int Profesor::puneNotaOral(int dificultate) {
         return nota;
 }; 
 
+int Profesor::puneNotaGrila(int grile) {
+    int nota = grile * 2;
+    if(nota > 10) return 10;
+    if(nota < 4) return 4;
+};
+
 std::string Profesor::getTitluComplet() const {
     return titlu + " " + nume;
 };
 
 void Profesor::exmatriculeaza(Student* s) {
-    std::cout << RED << "[!!!] Profesorul " << nume << " a tipat la tine. Ai pierdut toata energia!\n" << RESET;
     s->modificaEnergie(-1000);
 };
 

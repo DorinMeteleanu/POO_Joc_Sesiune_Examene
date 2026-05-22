@@ -9,7 +9,7 @@ void Student::afiseaza_status() const {
     std::cout << "Nivel STRES: " << stres_curent << " / " << rezistenta_stres << "\n";
     std::cout << "Bani in portofel: " << bani << "\n";
     std::cout << "Bonus din pregatire: " << bonus_pregatire << "\n";
-    std::cout << "=================================\n";
+    std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
     std::cout << "Specializare: " << specializare << "\n";
     std::cout << "An studiu: " << an_studiu << "\n";
     std::cout << "CREDITE acumulate: " << credite_acumulate << "\n";
@@ -47,6 +47,9 @@ void Student::modificaEnergie(int cantitate) {
     if (nivel_energie < 0) {
         nivel_energie = 0;
     }
+    if(nivel_energie > 150) {
+        nivel_energie = 150;
+    }
 };
 
 int Student::getCredite() const {
@@ -74,6 +77,9 @@ int Student::getBonus() const {
 
 void Student::reseteazaBonus(int reducere) {
     bonus_pregatire -= reducere;
+    if(bonus_pregatire < 0) {
+        bonus_pregatire = 0;
+    }
 };
 
 void Student::relaxare() {

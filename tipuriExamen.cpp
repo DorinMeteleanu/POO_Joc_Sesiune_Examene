@@ -62,9 +62,9 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 dificultate -= 30;
             }
             else {
-                std::cout << "\n" << YELLOW << "[FAIL] " << RESET <<  "Ai primit avertisment! Te-ai panicat maxim! (-20 energie, +10 dificultate)\n";
+                std::cout << "\n" << YELLOW << "[FAIL] " << RESET <<  "Ai primit avertisment! Te-ai panicat maxim! (-20 energie, +10 dificultate, -15 rabdare profesor)\n";
                 student->modificaEnergie(-20);
-                profesor->scadeRabdare(10);
+                profesor->scadeRabdare(15);
                 dificultate += 10;
             }
         }
@@ -123,6 +123,9 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 
     if (student->getEnergie() <= 0) {
         std::cout << RED << "\n[GAME OVER] Ai cedat nervos la " << getNume() << "...\n" << RESET;
+    } else if (profesor->getRabdare() <=0){
+        std::cout << RED << "\n[!!!!!!!!] Profesorul ti-a dat prea multe avertismente. Nu te mai poate ierta acum, esti exmatriculat hahaha.\n" << RESET;
+        profesor->exmatriculeaza(student);
     } else if (dificultate <= 0) {
         std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
         student->adaugaCredite(getCredite());
@@ -240,7 +243,7 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << "! Castigi " << getCredite() << " credite!\n";
         student->adaugaCredite(getCredite());
         student->adaugaNota(nota);
-        if(nota > 7) {
+        if(nota >= 7) {
             std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
             student->modificaBani(15);
         }
@@ -354,9 +357,16 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
             student->adaugaCredite(getCredite());
             std::cout << "Total de credite curent: " << student->getCredite() << "\n";
+
         }
         else {
             std::cout << RED << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul" << RESET;
+        }
+        int nota = profesor->puneNotaGrila(dificultate);
+        std::cout << YELLOW << "\n[CATALOG]" << RESET << "Profesorul " << profesor->getTitluComplet() << " ti-a trecut nota " << nota << " in carnet.\n";
+        if(nota >= 7) {
+            std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
+            student->modificaBani(15);
         }
     }
 
