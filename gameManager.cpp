@@ -253,9 +253,9 @@ void GameManager::pornesteJocul() {
         }
 
         if(student->getEnergie() <= 0) {
-            std::cout << "\n==================================================\n";
+            std::cout << "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
             std::cout << RED << "[GAME OVER] " << RESET << "Ai ramas complet fara energie. Ai adormit pe holurile facultatii si te-au exmatriculat.";
-            std::cout << "\n==================================================\n";
+            std::cout << "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
             std::cout << "\nApasa ENTER pentru a iesi...";
             std::cin.ignore(10000, '\n'); 
             std::cin.get();
@@ -284,6 +284,7 @@ void GameManager::tips() {
     std::cout << YELLOW << "INFORMATII UTILE\n\n" << RESET;
     std::cout << "Ai 3 tipuri de examene pe care le poti sustine: Scris, Oral, Grila. indiferent de tip, trebuie sa nu ramai cu energia la 0.\n";
     std::cout << "De asemenea sunt 2 tipuri de profesor care te pot asista la examen: cel Exigent (Ionescu) si cel Relaxat (Popescu), fiecare cu tabieturile sale\n";
+    std::cout << "Cel exigent are mai putina rabdare, ceea ce te va incurca cel mai mult la examenul oral. De asemenea ficare poate genera actiuni diferite dupa o tura.\n";
     std::cout << "Daca il prinzi pe cel exigent, ai grija cum iti gestionezi resursele, este foarte imprevizibil.\n\n";
     std::cout << "Examenul scris este cel mai lung, sa raspunzi direct la o intrebare te costa foarte multa energie...\n";
     std::cout << "Examenul se termina daca reusesti sa reduci dificultatea acestuia la 0.\n";

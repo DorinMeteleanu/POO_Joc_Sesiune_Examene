@@ -10,7 +10,6 @@ ExamenScris::ExamenScris(std::string materie, Profesor* p) : Examen(materie, 60,
 void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     int dificultate = getDificultate();
     std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
-    std::cout << "INCEPE EXAMENUL SCRIS LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << dificultate << "\n";
     profesor->afiseaza_status();
     std::cout << "Examenele scrise sunt foarte grele si mananca multa energie, dar valoreaza multe credite.\n";
@@ -111,6 +110,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         profesor->reactioneaza(student, dificultate);
         if (cooldown_relaxare > 0 && alegere != 2) cooldown_relaxare--;
         if (cooldown_item > 0 && alegere != 2) cooldown_item--;
+        ture++;
         if(rand() % 4) {
             std::cout << YELLOW << "\n[!] Stresul examenului iti mai mananca 5 energie" << RESET;
             student->modificaEnergie(-5);
@@ -130,23 +130,28 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         int nota = profesor->puneNotaScris(ture);
         std::cout << YELLOW << "[CATALOG]" << RESET << "Profesorul " << profesor->getTitluComplet() << " ti-a trecut nota " << nota << " in carnet.\n";
         student->adaugaNota(nota);
+        if(nota > 7) {
+            std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
+            student->modificaBani(15);
+        }
     }
 };
 
 //EXAMEN ORAL
-ExamenOral::ExamenOral(std::string materie, Profesor* p) : Examen(materie, 30, 10, 2, p) {}
+ExamenOral::ExamenOral(std::string materie, Profesor* p) : Examen(materie, 40, 3, 2, p) {}
 void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
-    std::cout << "INCEPE EXAMENUL ORAL LA " << getNume() << "!\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
+    profesor->afiseaza_status();
     std::cout << "Acest tip de examen este destul de usor de trecut, in consecinta nu valoreaza prea multe credite.\n";
-    std::cout << "Te poti folosi si de noroc, insa aici conteaza foarte mult si de profesorul la care pici sa dai examenul oral.\n";
+    std::cout << "Te poti folosi si de noroc, insa aici conteaza foarte mult si de profesorul la care pici sa dai examenul oral (vezi cata rabdare are).\n";
     std::cout << "Ai grija sa nu ramana fara rabdare!!\n";
     std::cout << "\nApasa ENTER pentru a continua...";
     std::cin.ignore(10000, '\n'); 
     std::cin.get(); 
     std::cout << "Tocmai ai intrat in sala de examen! Profesorul incepe sa iti adreseze intrebari...\n";
     int dificultate = getDificultate();
+    int cooldown_item = 0;
     while (dificultate > 0 && student->getEnergie() > 0 && profesor->getRabdare() > 0) {
         std::cout << "-> Dificultate ramasa: " << dificultate << "\n";
         std::cout << "-> Energia ramasa: " << student->getEnergie() << "\n";
@@ -171,8 +176,9 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
                 student->modificaEnergie(-5);
             }
             else {
-                std::cout << YELLOW << "\n[FAIL] Degeaba, nu-l poti fenta de data asta!\n" << RESET;
+                std::cout << YELLOW << "\n[FAIL] Nu-l poti fenta de data asta, proful isi cam pierde din rabdare!\n" << RESET;
                 student->modificaEnergie(-5);
+                profesor->scadeRabdare(10);
             }
         }
         else if(alegere == 3) {
@@ -216,10 +222,13 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         else {
             std::cout << "\nAlegere invalida. Pierzi timpul!\n";
         }
-        profesor->reactioneaza(student, dificultate);
-        if(rand() % 4) {
+        if(rand() % 2) {
+            std::cout << "-> Se vede ca proful incepe sa oboseasca. Ii scade 3 rabdare.";
+            profesor->scadeRabdare(3);
+        }
+        if(rand() % 4 == 1) {
             std::cout << "-> Stresul examenului iti mai consuma 5 energie.\n";
-            student->modificaEnergie(-5);
+            student->modificaEnergie(-stres_provocat);
         }
     }
     if (student->getEnergie() <= 0) {
@@ -230,10 +239,18 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         std::cout << YELLOW << "\n[CATALOG]" << RESET << "Profesorul " << profesor->getTitluComplet() << " ti-a trecut nota " << nota << " in carnet.\n";
         std::cout << "! Castigi " << getCredite() << " credite!\n";
         student->adaugaCredite(getCredite());
+        student->adaugaNota(nota);
+        if(nota > 7) {
+            std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
+            student->modificaBani(15);
+        }
     } else if (dificultate <= 0) {
-        std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite!\n" << RESET;
+        std::cout << GREEN << "\n[VICTORIE] Ai luat examenul la " << getNume() << "! Castigi " << getCredite() << " credite si nota 10!\n" << RESET;
         student->adaugaCredite(getCredite());
+        student->adaugaNota(10);
         std::cout << "Total de credite curent: " << student->getCredite() << "\n";
+        std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
+        student->modificaBani(15);
     }
 };
 
