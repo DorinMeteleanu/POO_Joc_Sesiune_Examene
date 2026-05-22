@@ -33,3 +33,5 @@ void StrategieRelaxata::aplicaStrategie(int ore, int& energie, int& stres, int& 
 int StrategieRelaxata::getCooldownValue() const{
     return 1;
 };
+
+StrategieInvatare::~StrategieInvatare() {};

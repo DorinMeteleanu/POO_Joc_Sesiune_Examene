@@ -15,11 +15,13 @@ public:
 };
 
 class StrategieRelaxata : public StrategieInvatare {
+public:
     void aplicaStrategie(int ore, int& energie, int& stres, int& bonus) override;
     int getCooldownValue() const;
 };
 
 class StrategieNormala : public StrategieInvatare {
+public:
     void aplicaStrategie(int ore, int& energie, int& stres, int& bonus) override;
     int getCooldownValue() const;
 };

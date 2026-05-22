@@ -3,8 +3,8 @@ Profesor::Profesor(std::string nume, int rabdare, int exigenta, std::string titl
 
 void Profesor::afiseaza_status() const {
     std::cout << getTitluComplet() << "\n";
-    std::cout << "Rabdare: " << nivel_energie;
-    std::cout << "Exigenta: " << rezistenta_stres;
+    std::cout << "Rabdare: " << nivel_energie << "\n";
+    std::cout << "Exigenta: " << rezistenta_stres << "\n";
 };
 
 int Profesor::puneNotaScris(int ture) {

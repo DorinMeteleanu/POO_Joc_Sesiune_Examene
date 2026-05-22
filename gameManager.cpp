@@ -4,6 +4,7 @@
 #include "json.hpp"
 #include <stdexcept>
 #include "ui_util.h"
+#include "strategieInvatare.h"
 using json = nlohmann::json;
 
 GameManager* GameManager::instanta = nullptr;
@@ -155,21 +156,37 @@ void GameManager::pornesteJocul() {
                 student->afiseaza_status();
                 break;
             case 2: {
-                int ore = 0;
-                std::cout << "Cate ore vrei sa inveti?: \n";
-                std::cin >> ore;
-                if(ore > 0) {
-                    std::cout << "Vei avea nevoie de " << 2*ore << " energie si iti va aduce " << 3 * ore << " stres. Confirmi?\n";
-                    std::cout << "Apasa 1 pentru DA sau 0 pentru NU\n";
-                    int inp;
-                    std::cin >> inp;
-                    if(inp == 1) {
-                        student->invata(ore);
-                    } else {
-                        std::cout << "E ok daca te-ai razgandit. Poti invata altcandva.\n";
-                    }
+                std::cout << "Alege stilul: 1. Normal (CD: " << student->getSTNormal() << ") | 2. Hardcore (CD: " << student->getSTHardcore() << ") | 3. Relaxat (CD: " <<
+      student->getSTRelaxat() << ")\n";
+                int stil;
+                std::cin >> stil;
+                if(stil == 1 && student->getSTNormal() > 0) {
+                    std::cout << YELLOW << "[!] Epuizat! Mai ai de dat " << student->getSTNormal() << " examene.\n" << RESET;
+                    break;
                 }
+                if(stil == 2 && student->getSTHardcore() > 0) {
+                    std::cout << YELLOW << "[!] Epuizat! Mai ai de dat " << student->getSTHardcore() << " examene.\n" << RESET;
+                    break;
+                }
+                if(stil == 1 && student->getSTRelaxat() > 0) {
+                    std::cout << YELLOW << "[!] Epuizat! Mai ai de dat " << student->getSTRelaxat() << " examene.\n" << RESET;
+                    break;
+                }
+                if(stil == 1) {
+                    student->setStrategie(new StrategieNormala()); 
+                    student->setSTNormal(2); 
+                }
+                if(stil == 2) {
+                    student->setStrategie(new StrategieHardcore()); 
+                    student->setSTHardcore(3); 
+                }
+                if(stil == 3) {
+                    student->setStrategie(new StrategieRelaxata()); 
+                    student->setSTRelaxat(1); 
+                }
+                student->invata(5);
                 break;
+
             }
             case 3: {
                 Examen* e = ExamenFactory::genereazaExamenAleatoriu();
@@ -182,6 +199,7 @@ void GameManager::pornesteJocul() {
                     std::cout << "\n[!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!][!]\n";
                     optiune = 7;
                 }
+                student->scadeCooldowns();
                 break;
             }
             case 4: {
@@ -210,6 +228,7 @@ void GameManager::pornesteJocul() {
             }
             std::cout << "[><><><><><><><><GHIOZDANUL LUI " << student->getNume() << "><><><><><><><><\n";
             ghiozdan->afiseazaElemente();
+            break;
 
             }
             case 7: 

@@ -1,6 +1,8 @@
 #include "student.h"
 Student::Student(std::string nume, int energie, int stres, std::string specializare, int an_studiu, int credite, double media)
-    : Persoana(nume, energie, stres), specializare(specializare), an_studiu(an_studiu), credite_acumulate(credite), media_generala(media), bani(50), bonus_pregatire(0), stres_curent(0) {}
+    : Persoana(nume, energie, stres), specializare(specializare), an_studiu(an_studiu), credite_acumulate(credite), media_generala(media), bani(50), bonus_pregatire(0), stres_curent(0) {
+        strategie_curenta = new StrategieNormala();
+    }
 void Student::afiseaza_status() const {
     std::cout << "Student: " << nume << "\n";
     std::cout << "Nivel ENERGIE: " << nivel_energie << "/ 150\n";
@@ -29,12 +31,9 @@ double Student::getMedieGenerala() const {
     return media_generala;
 };
 void Student::invata(int ore) {
-        nivel_energie -= ore * 2;
-        stres_curent += ore * 3;
-        bonus_pregatire += ore * 2;
-        std::cout << nume << " a invatat pentru " << ore << " ore";
+        strategie_curenta->aplicaStrategie(ore, nivel_energie, stres_curent, bonus_pregatire);
         if (nivel_energie < 20) {
-            std::cout << "\nAr fi o idee buna sa bea o cafelutza! \n";
+            std::cout << "\n[!] Ar fi o idee buna sa bea o cafelutza! Energia e foarte low\n";
         }
         if(stres_curent >= 23 && stres_curent < 25) {
             std::cout << "\n[!!] Atentie, nivelul de stres este foarte mare, trebuie sa te relaxezi inainte sa mai inveti iar singur si sa iei bonus\n";
@@ -111,5 +110,39 @@ void Student::adaugaNota(int nota) {
     media_generala = suma/note_obtinute.size();
 };
 
+void Student::scadeCooldowns() {
+    if(st_hardcore > 0) st_hardcore--;
+    if(st_normal > 0) st_normal--;
+    if(st_relaxat > 0) st_relaxat--;
+};
+
+void Student::setStrategie(StrategieInvatare* s) {
+    if (strategie_curenta) delete strategie_curenta;
+    strategie_curenta = s;
+};
+
+int Student::getSTHardcore() const {
+    return st_hardcore;
+};
+
+int Student::getSTNormal() const {
+    return st_normal;
+};
+
+int Student::getSTRelaxat() const {
+    return st_relaxat;
+};
+
+void Student::setSTHardcore(int v) {
+    st_hardcore = v;
+}; 
+
+void Student::setSTNormal(int v) {
+    st_normal = v;
+}; 
+
+void Student::setSTRelaxat(int v) {
+    st_relaxat = v;
+}; 
 
 
