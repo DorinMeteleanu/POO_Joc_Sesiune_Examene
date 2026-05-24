@@ -55,7 +55,7 @@ GameManager::GameManager() {
     std::cout << "Ultimul lucru, spune-mi in ce an de studiu esti: ";
     std::cin >> an_studiu;
     std::cin.ignore(10000, '\n');
-    student = new Student(nume_student, 150, 20, specializare, an_studiu, 0, 0.0);
+    student = new Student(nume_student, 150, 25, specializare, an_studiu, 0, 0.0);
     ghiozdan = new Ghiozdan<Item>(5);
     std::cout << "Regulile sunt simple. Sesiunea aceasta trebuie sa strangi 20 de credite pentru a promova.\n";
     std::cout << "Poti sa redai examene, nu conteaza la ce materii le iei atat timp cat atingi pragul de credite\n";
@@ -192,8 +192,7 @@ void GameManager::pornesteJocul() {
                 int nr_ore;
                 std::cout << "Cate ore vrei sa inveti? ";
                 std::cin >> nr_ore;
-                student->invata(nr_ore);
-                if(stil != 1 && stil != 2 && stil != 3) {
+                if(stil == 1 || stil == 2 || stil == 3) {
                     student->invata(nr_ore);
                 } else {
                     std::cout << "Optiune invalida de studiu!\n";
@@ -272,7 +271,7 @@ void GameManager::pornesteJocul() {
             std::cin.get();
             optiune = 9;
         }
-        else if(student->getStresCurent() >= 25) {
+        else if(student->getStresCurent() >= student->getRezistentaStres()) {
             std::cout << "\n==================================================\n";
             std::cout << RED << "[GAME OVER] " << RESET << "Burnout total!!. Stresul a ajuns la " << student->getStresCurent() << "\n";
             std::cout << "Ai cedat nervos, ti-ai impachetat lucrurile si te-ai intors acasa.\n";

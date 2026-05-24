@@ -34,6 +34,7 @@ public:
     int getCredite() const;
     void adaugaCredite(int n);
     void modificaEnergie(int cantitate);
+    int getRezistentaStres() const;
 
     void adaugaNota(int nota);
 
@@ -60,5 +61,5 @@ public:
 
     void scadeCooldowns();
 
-    ~Student() {}
+    ~Student();
 };

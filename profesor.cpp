@@ -16,6 +16,7 @@ int Profesor::puneNotaScris(int ture) {
 };
 int Profesor::puneNotaOral(int dificultate) {
         int nota = 10 - (dificultate/10);
+        if (nota > 10) nota = 10;
         return nota;
 }; 
 

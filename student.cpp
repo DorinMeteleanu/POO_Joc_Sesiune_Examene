@@ -27,6 +27,10 @@ int Student::getAnStudiu() const {
     return an_studiu;
 };
 
+int Student::getRezistentaStres() const {
+    return rezistenta_stres;
+};
+
 double Student::getMedieGenerala() const {
     return media_generala;
 };
@@ -151,4 +155,9 @@ void Student::setSTRelaxat(int v) {
     st_relaxat = v;
 }; 
 
+Student::~Student() {
+    if (strategie_curenta != nullptr) {
+        delete strategie_curenta;
+    }
+}
 

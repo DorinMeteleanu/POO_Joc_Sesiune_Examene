@@ -362,7 +362,7 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         else {
             std::cout << RED << "\n[FAIL] Nu ai destule grile corecte, nu iei creditele, dar continui jocul" << RESET;
         }
-        int nota = profesor->puneNotaGrila(dificultate);
+        int nota = profesor->puneNotaGrila(grile);
         std::cout << YELLOW << "\n[CATALOG]" << RESET << "Profesorul " << profesor->getTitluComplet() << " ti-a trecut nota " << nota << " in carnet.\n";
         if(nota >= 7) {
             std::cout << "[!] O nota ca asta iti asigura o bursa. Castigi 15 lei (nu te duce in Afi ca ramai fara ei)\n";
