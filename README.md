@@ -13,6 +13,8 @@ Acesta se folosește de mecanici tipice ale jocurilor de genul. Jucătorul are u
  
 ## Functionalități și mecanici de joc (Gameplay)
 
+Jocul se bazează pe logică și strategie, jucătorul trebuie să facă decizii de moment care îl vor costa resurse. Trebuie să fie atent la acestea, deoarece vor exista și evenimente aleatorii care îi vor lua sau îi vor da resurse.
+
 1. Sistem de gestionare a resurselor:
      - Energia: Se consumă prin învățat și prin susținerea examenelor. Este specificat câtă energie necesită fiecare acțiune, astfel încât jucătorul își va putea crea strategia posibilă prin care să folosească și să obțină energie.
      - Stresul: Acest mecanism crește în timpul sesiunilor individuale de studiu, astfel încât acestea să nu poată fi folosite continuu fără consecințe. Un nivel apropiat de cel de Burnout va declanșa avertismente jucătorului
@@ -26,7 +28,7 @@ Acesta se folosește de mecanici tipice ale jocurilor de genul. Jucătorul are u
        - `Profesor supraveghetor`: În joc sunt doi profesori, Ionescu și Popescu, cel mai relaxat și cel mai exigent. Tipul de profesor este asignat random unui examen început și se va remarca la finalul unei ture când fiecare are o acțiune diferită (ex: cel rău te poate face să pierzi energie mai repede, iar cel bun te poate ajuta să iei un bonus de energie sau de punctaj). Acestia pun note identic prin clasa lor de bază Profesor. Mai pot apărea diferențe între ei, de exemplu la răbdarea pa care o au (similar cu nivel_energie al studentului jucător), care dacă ajunge la 0 se termină mai repede examenul (cel mai vizibil la examenul oral).
        - `Evenimente Alleatorii`: Pe parcursul sesiunii pot apărea evenimente neprevăzute (ex: găsește bani pe jos, i-a mâncat iepurele tema de laborator, profesorul întârzie, etc.), care adaugă imprevizibilitate.
    
-5. Gestionarea datelor: Sistem complet de Save/Load a progresului, menținând inventarul și statisticile intacte între sesiuni de joc
+5. Gestionarea datelor: Sistem complet de Save/Load a progresului, menținând inventarul și statisticile intacte între sesiuni de joc.
   
 ## Arhitectură și concepte avansate de POO
 
@@ -36,7 +38,7 @@ Acesta se folosește de mecanici tipice ale jocurilor de genul. Jucătorul are u
 2. Design pattern
      - Singleton Pattern (GameManager): Asigura existenta unei singure instante de manager de joc pentru loop-ul principal, Meniul de Boot și instanțierea jucătorului și accesul la fișiere de salvare.
      - Factory Pattern: ExamenFactory, metoda statică din fabrică generează examene complet randomizate (materie, format) ascunzând complexitatea alocării de memorie de clasa GameManager
-     - Strategy Pattern (Studeny): În meniul principal, studentul poate alege cum să învețe. Este recomandat să învețe normal sau hardcore, deoarece acestea aduc multe puncte bonus pe care le poate folosi, numai că acestea și consumă mult mai multă energie și aduc un nivel mai mare de stres pe care trebuie apoi să îl reducă. Acesta poate alege și modul relaxat, care aduce mai puțin bonus. După folosirea unui mod de studiu jucătorul trebuie să aștepte un număr de ture corespunzător nivelului (1, 2 sau 3 ture).
+     - Strategy Pattern (Student): În meniul principal, studentul poate alege cum să învețe. Este recomandat să învețe normal sau hardcore, deoarece acestea aduc multe puncte bonus pe care le poate folosi, numai că acestea și consumă mult mai multă energie și aduc un nivel mai mare de stres pe care trebuie apoi să îl reducă. Acesta poate alege și modul relaxat, care aduce mai puțin bonus. După folosirea unui mod de studiu jucătorul trebuie să aștepte un număr de ture corespunzător nivelului (1, 2 sau 3 ture).
        
 3. Librarie JSON
      - Am utilizat libraria `nlohmann/json`. Modul de salvare extrage datele primitive, dar include și pointerii din clasa abstractă Item, care sunt transformați într-un array JSON, iar la metoda de Load, construcția se reia reconstruind derivatele corecte (produsele)
