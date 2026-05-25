@@ -95,6 +95,13 @@ void Student::relaxare() {
     std::cout << "Relaxarea a avut efect, surprinzator. Stresul a scazut.\n";
 };
 
+void Student::reduceStres(int reducere) {
+    stres_curent -= reducere;
+    if(stres_curent < 0) {
+        stres_curent = 0;
+    }
+};
+
 int Student::getStresCurent() const {
     return stres_curent;
 };

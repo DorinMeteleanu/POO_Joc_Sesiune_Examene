@@ -131,15 +131,23 @@ void GameManager::magazin() {
 
 void GameManager::evenimentAleatoriu() {
     if(rand() % 4 == 1) {
-        int tip = rand() % 2;
+        int tip = rand() % 4;
         std::cout << MAGENTA << "\n[EVENIMENT NEASTEPTAT] \n" << RESET;
         if(tip == 0) {
-            std::cout << "Ai gasit 15 lei pe jos. Brusc nu te mai simti sarac.\n";
-            student->modificaBani(15);
+            std::cout << "Ai gasit 20 lei pe jos. Brusc nu te mai simti sarac.\n";
+            student->modificaBani(20);
         }
         else if(tip == 1) {
             std::cout << "Profesorul a intarziat 20 de minute. Ai dormit cu capul pe banca. (+10 energie)\n";
             student->modificaEnergie(10);
+        }
+        else if(tip == 2) {
+            std::cout << "Ti-a mancat iepurele tema de laborator (nici macar nu ai iepure...) (-2 bonus)\n";
+            student->reseteazaBonus(2);
+        }
+        else if(tip == 3) {
+            std::cout << "Stai la povesti cu prodecanul facultatii (nici nu te mai intreb cum ai ajuns aici..) (-5 stres)\n";
+            student->reduceStres(5);
         }
         std::cout << "\nApasa ENTER pentru a continua...";
             std::cin.ignore(10000, '\n'); 
@@ -272,10 +280,10 @@ void GameManager::pornesteJocul() {
             optiune = 9;
         }
         else if(student->getStresCurent() >= student->getRezistentaStres()) {
-            std::cout << "\n==================================================\n";
+            std::cout << "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
             std::cout << RED << "[GAME OVER] " << RESET << "Burnout total!!. Stresul a ajuns la " << student->getStresCurent() << "\n";
             std::cout << "Ai cedat nervos, ti-ai impachetat lucrurile si te-ai intors acasa.\n";
-            std::cout << "==================================================\n";
+            std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
             std::cout << "\nApasa ENTER pentru a iesi...";
             std::cin.ignore(10000, '\n'); 
             std::cin.get();
@@ -336,7 +344,7 @@ void GameManager::salveazaJoc() {
 void GameManager::incarcaJoc() {
     std::ifstream file("salvare.json");
     if(!file) {
-        std::cout << RED << "Nu exista progres de joc salvat" << RESET << "\n";
+        std::cout << RED << "[?] Nu exista progres de joc salvat" << RESET << "\n";
         return;
     }
     json j;

@@ -50,6 +50,7 @@ public:
     void setBonus(int b);
 
 
+    void reduceStres(int reducere);
     void setStrategie(StrategieInvatare* s);
     int getSTHardcore() const;
     int getSTNormal() const;
