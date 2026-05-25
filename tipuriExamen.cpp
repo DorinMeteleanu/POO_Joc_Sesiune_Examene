@@ -6,7 +6,7 @@
 #include "tipuriProfesor.h"
 
 //EXAMEN SCRIS
-ExamenScris::ExamenScris(std::string materie, Profesor* p) : Examen(materie, 60, 30, 5, p) {}
+ExamenScris::ExamenScris(std::string materie, Profesor* p) : Examen(materie, 70, 7, 5, p) {}
 void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     int dificultate = getDificultate();
     std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
@@ -84,7 +84,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         }
         else if(alegere == 5) {
             if(cooldown_item > 0) {
-                std::cout << YELLOW << "\nE prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
+                std::cout << YELLOW << "\n[!] E prea devreme sa folosesti un item. Mai asteapta " << RESET << cooldown_item << YELLOW << " ture\n" << RESET;
             }
             if(ghiozdan->esteGol()) {
                 std::cout << YELLOW << "\n[!] Ghiozdanul tau este gol! Nu ai ce folosi!\n" << RESET;
@@ -111,9 +111,9 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         if (cooldown_relaxare > 0 && alegere != 2) cooldown_relaxare--;
         if (cooldown_item > 0 && alegere != 2) cooldown_item--;
         ture++;
-        if(rand() % 4) {
-            std::cout << YELLOW << "\n[!] Stresul examenului iti mai mananca 5 energie" << RESET;
-            student->modificaEnergie(-5);
+        if(rand() % 4 == 1) {
+            std::cout << YELLOW << "\n[!] Stresul examenului iti mai mananca " << stres_provocat << " energie" << RESET;
+            student->modificaEnergie(-stres_provocat);
         }
 
         std::cout << "\nApasa ENTER pentru a continua...";
@@ -141,7 +141,7 @@ void ExamenScris::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 };
 
 //EXAMEN ORAL
-ExamenOral::ExamenOral(std::string materie, Profesor* p) : Examen(materie, 40, 3, 2, p) {}
+ExamenOral::ExamenOral(std::string materie, Profesor* p) : Examen(materie, 50, 4, 3, p) {}
 void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
     std::cout << "Dificultate: " << getDificultate() << "\n";
@@ -230,7 +230,7 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
             profesor->scadeRabdare(3);
         }
         if(rand() % 4 == 1) {
-            std::cout << "-> Stresul examenului iti mai consuma 5 energie.\n";
+            std::cout << "-> Stresul examenului iti mai consuma " << stres_provocat << " energie.\n";
             student->modificaEnergie(-stres_provocat);
         }
     }
@@ -259,7 +259,7 @@ void ExamenOral::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
 
 
 //EXAMEN GRILA
-ExamenGrila::ExamenGrila(std::string materie, Profesor* p) : Examen(materie, 40, 20, 3, p) {}
+ExamenGrila::ExamenGrila(std::string materie, Profesor* p) : Examen(materie, 40, 5, 4, p) {}
 void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
     std::cout << "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n";
     std::cout << "INCEPE EXAMENUL GRILA LA " << getNume() << "!\n";
@@ -348,6 +348,10 @@ void ExamenGrila::sustineExamen(Student* student, Ghiozdan<Item>* ghiozdan) {
         }
         profesor->reactioneaza(student, dificultate);
         if(cooldown_item > 0) cooldown_item--;
+        if(rand() % 4 == 1) {
+            std::cout << "-> Stresul examenului iti mai consuma " << stres_provocat << " energie.\n";
+            student->modificaEnergie(-stres_provocat);
+        }
     }
     
     if (student->getEnergie() <= 0) {
